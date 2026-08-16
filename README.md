@@ -70,6 +70,59 @@ The program will:
 
 ---
 
+## Flowchart
+
+```mermaid
+flowchart TD
+    A([Start]) --> B[/Input Total Units 'unit'/]
+    B --> C{unit <= 100 ?}
+    C -- Yes --> D["bill = unit * 6"]
+    C -- No --> E{unit <= 200 ?}
+    E -- Yes --> F["bill = (100 * 6) + ((unit - 100) * 7)"]
+    E -- No --> G{unit <= 300 ?}
+    G -- Yes --> H["bill = (100 * 6) + (100 * 7) + ((unit - 200) * 8)"]
+    G -- No --> I["bill = (100 * 6) + (100 * 7) + (100 * 8) + ((unit - 300) * 10)"]
+    D --> J[Set fixed_charge = 200]
+    F --> J
+    H --> J
+    I --> J
+    J --> K["tax = bill * 10 / 100"]
+    K --> L["total_bill = bill + fixed_charge + tax"]
+    L --> M[/Display Slab Breakdown/]
+    M --> N[/Display Electricity Charge, Fixed Charge, Tax & Total Bill/]
+    N --> O([End])
+```
+
+---
+
+## Algorithm
+
+1. **Start**
+2. Display the application header (`"--------- ELECTRICITY BILL CALCULATOR ---------"`).
+3. Prompt the user to input the total units consumed (`unit`) as an integer.
+4. Calculate the base electricity charge (`bill`) based on slab rates:
+   - **If** `unit <= 100`:
+     - `bill = unit * 6`
+   - **Else if** `unit <= 200`:
+     - `bill = (100 * 6) + ((unit - 100) * 7)`
+   - **Else if** `unit <= 300`:
+     - `bill = (100 * 6) + (100 * 7) + ((unit - 200) * 8)`
+   - **Else** (`unit > 300`):
+     - `bill = (100 * 6) + (100 * 7) + (100 * 8) + ((unit - 300) * 10)`
+5. Set `fixed_charge = 200`.
+6. Calculate tax: `tax = bill * 10 / 100` (10% of electricity charge).
+7. Calculate total bill: `total_bill = bill + fixed_charge + tax`.
+8. Display the bill header and the units consumed.
+9. Display the slab-wise calculation breakdown:
+   - If `unit <= 100`: print charges for units 1–100.
+   - If `unit <= 200`: print charges for units 1–100 and 101–200.
+   - If `unit <= 300`: print charges for units 1–100, 101–200, and 201–300.
+   - If `unit > 300`: print charges for units 1–100, 101–200, 201–300, and 301+.
+10. Display Electricity Charge, Fixed Charge, Tax (10%), and Total Bill.
+11. **Stop**
+
+---
+
 ## Output
 
 Example Output
